@@ -21,7 +21,14 @@ export const Route = createFileRoute("/app")({
   component: AppShell,
 });
 
-const nav = [
+type NavItem = {
+  to: "/app" | "/app/consultant" | "/app/proposals" | "/app/invoices" | "/app/crm" | "/app/analytics" | "/app/settings";
+  label: string;
+  icon: typeof Home;
+  exact?: boolean;
+};
+
+const nav: NavItem[] = [
   { to: "/app", label: "Home", icon: Home, exact: true },
   { to: "/app/consultant", label: "AI Consultant", icon: Bot },
   { to: "/app/proposals", label: "Proposals", icon: FileText },
@@ -29,7 +36,7 @@ const nav = [
   { to: "/app/crm", label: "CRM", icon: Users },
   { to: "/app/analytics", label: "Analytics", icon: LineChart },
   { to: "/app/settings", label: "Settings", icon: Settings },
-] as const;
+];
 
 const mobileNav = nav.filter((n) => n.label !== "Settings").slice(0, 5);
 
