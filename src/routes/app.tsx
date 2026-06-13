@@ -75,14 +75,15 @@ function AppShell() {
       {/* Desktop sidebar */}
       <aside className="hidden w-60 shrink-0 flex-col border-r border-border bg-sidebar md:flex">
         <div className="flex h-14 items-center gap-2 border-b border-sidebar-border px-4">
-          <div className="grid h-7 w-7 place-items-center rounded-md bg-primary text-primary-foreground">
-            <Sparkles className="h-4 w-4" />
+          <div className="grid h-7 w-7 place-items-center rounded-md bg-foreground text-background">
+            <Sparkles className="h-3.5 w-3.5" />
           </div>
           <div className="min-w-0">
-            <div className="truncate text-sm font-semibold tracking-tight">Austech</div>
+            <div className="truncate font-display text-[14px] font-semibold tracking-tight">Austech</div>
             <div className="truncate text-[11px] text-muted-foreground">{user.business}</div>
           </div>
         </div>
+
         <nav className="flex-1 space-y-0.5 p-2">
           {nav.map(({ to, label, icon: Icon, exact }) => {
             const active = isActive(to, exact);
