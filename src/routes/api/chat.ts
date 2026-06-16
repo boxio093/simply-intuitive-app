@@ -3,7 +3,6 @@ import { convertToModelMessages, generateText, streamText, type UIMessage } from
 
 import { createLovableAiGatewayProvider } from "@/lib/ai-gateway.server";
 import {
-  FOLLOWUPS_PROMPT,
   INTENT_CLASSIFIER_PROMPT,
   systemPromptFor,
   type Intent,
