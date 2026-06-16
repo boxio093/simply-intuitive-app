@@ -90,7 +90,7 @@ export const Route = createFileRoute("/api/chat")({
         const result = streamText({
           model: fastModel,
           system,
-          messages: convertToModelMessages(body.messages),
+          messages: await convertToModelMessages(body.messages),
         });
 
         return result.toUIMessageStreamResponse({
