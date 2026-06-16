@@ -20,6 +20,7 @@ import { Route as AppInvoicesRouteImport } from './routes/app.invoices'
 import { Route as AppCrmRouteImport } from './routes/app.crm'
 import { Route as AppConsultantRouteImport } from './routes/app.consultant'
 import { Route as AppAnalyticsRouteImport } from './routes/app.analytics'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -76,12 +77,18 @@ const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
   path: '/analytics',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/chat': typeof ApiChatRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/consultant': typeof AppConsultantRoute
   '/app/crm': typeof AppCrmRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/chat': typeof ApiChatRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/consultant': typeof AppConsultantRoute
   '/app/crm': typeof AppCrmRoute
@@ -108,6 +116,7 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/chat': typeof ApiChatRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/consultant': typeof AppConsultantRoute
   '/app/crm': typeof AppCrmRoute
@@ -123,6 +132,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/auth'
     | '/sitemap.xml'
+    | '/api/chat'
     | '/app/analytics'
     | '/app/consultant'
     | '/app/crm'
@@ -135,6 +145,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/sitemap.xml'
+    | '/api/chat'
     | '/app/analytics'
     | '/app/consultant'
     | '/app/crm'
@@ -148,6 +159,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/auth'
     | '/sitemap.xml'
+    | '/api/chat'
     | '/app/analytics'
     | '/app/consultant'
     | '/app/crm'
@@ -162,6 +174,7 @@ export interface RootRouteChildren {
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiChatRoute: typeof ApiChatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -243,6 +256,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAnalyticsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -273,17 +293,8 @@ const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
